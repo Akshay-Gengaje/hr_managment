@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import Content from "../../components/content/Content";
-
+import { ToastContainer, toast } from "react-toastify";
 import { useFormik } from "formik";
 import { adminFormSchema } from "../../schemas/AdminForm";
 import { useState } from "react";
@@ -15,6 +15,14 @@ import { signupUser } from "../../services/User";
 
 const AdminPage = () => {
   const [loading, setLoading] = useState(false);
+  const onSubmit = async (values, { resetForm }) => {
+    console.log(values);
+    setLoading(true);
+    const res = await signupUser(values);
+    toast(res.message);
+    resetForm();
+    setLoading(false);
+  };
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -28,17 +36,24 @@ const AdminPage = () => {
       confirmPassword: "",
     },
     validationSchema: adminFormSchema,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      setLoading(true);
-      signupUser(values);
-      resetForm();
-      setLoading(false);
-    },
+    onSubmit,
   });
 
   return (
     <Content className="text-gray-500 w-fit m-auto mt-10">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+
       <form onSubmit={formik.handleSubmit}>
         <h1 className="uppercase text-xl font-semibold">Add Employee</h1>
         <div className="bg-gray-400  h-[1px] w-full my-2 rounded-xl"></div>
@@ -190,6 +205,7 @@ const AdminPage = () => {
           </Button>
         </div>
       </form>
+      <ToastContainer />
     </Content>
   );
 };

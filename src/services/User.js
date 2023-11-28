@@ -13,11 +13,15 @@ const auth = getAuth(app);
 
 // create user and post their data to db
 export const signupUser = async (values) => {
-  const { email, password } = values;
-  const res = await createUserWithEmailAndPassword(auth, email, password);
-  console.log(res);
-  const userId = res.user.uid;
-  addUserDetails(userId, values);
+  try {
+    const { email, password } = values;
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const userId = res.user.uid;
+    addUserDetails(userId, values);
+    return { message: "User Created" };
+  } catch (error) {
+    throw new Error(error.message);
+  }
 };
 
 // add details of user to db
