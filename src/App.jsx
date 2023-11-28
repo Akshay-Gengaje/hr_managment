@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Pages/login/Login";
 import AdminPage from "./Pages/admin/AdminPage";
 import AppLayout from "./layout/AppLayout";
-
+import "react-toastify/dist/ReactToastify.css";
 import User from "./Pages/user/User";
 import { useUser } from "./context/userContext";
 

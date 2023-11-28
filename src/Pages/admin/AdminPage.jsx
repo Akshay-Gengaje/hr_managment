@@ -19,7 +19,16 @@ const AdminPage = () => {
     console.log(values);
     setLoading(true);
     const res = await signupUser(values);
-    toast(res.message);
+    toast.success(res.message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
     resetForm();
     setLoading(false);
   };
@@ -41,18 +50,7 @@ const AdminPage = () => {
 
   return (
     <Content className="text-gray-500 w-fit m-auto mt-10">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
+      <ToastContainer />
 
       <form onSubmit={formik.handleSubmit}>
         <h1 className="uppercase text-xl font-semibold">Add Employee</h1>
@@ -205,7 +203,6 @@ const AdminPage = () => {
           </Button>
         </div>
       </form>
-      <ToastContainer />
     </Content>
   );
 };
