@@ -1,4 +1,7 @@
+import { useLocation } from "react-router-dom";
 const Navbar = ({ isOpen, children }) => {
+  // useLocation used for get current path in future we can use it for navigate
+  const location = useLocation();
   return (
     <>
       <header
@@ -6,8 +9,12 @@ const Navbar = ({ isOpen, children }) => {
           isOpen ? "pl-64" : "pl-16"
         }`}
       >
-        <div className="flex items-center justify-between p-4">Menus</div>
+        <div className="flex items-center justify-between p-4">
+          {location.pathname}
+        </div>
       </header>
+
+      {/* Main Area Where content is displayed  */}
       <main
         className={`${
           isOpen ? "ml-64 pl-10" : "ml-10 pl-10"

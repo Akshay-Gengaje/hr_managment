@@ -1,35 +1,44 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./Pages/login/Login";
 import AdminPage from "./Pages/admin/AdminPage";
-
 import AppLayout from "./layout/AppLayout";
-import User from "./Pages/user/User";
 
-const routes = createBrowserRouter([
-  {
-    path: "/",
-    element: <Login />,
-  },
-  {
-    path: "/admin",
-    element: (
-      <AppLayout>
-        <AdminPage />
-      </AppLayout>
-    ),
-  },
-  {
-    path: "/user",
-    element: (
-      <AppLayout>
-        <User />
-      </AppLayout>
-    ),
-  },
-]);
+import User from "./Pages/user/User";
+import { useUser } from "./context/userContext";
 
 const App = () => {
-  return <RouterProvider router={routes} />;
+  const { isAuth, role } = useUser();
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" index element={<Login />} />
+        <Route
+          path="/admin"
+          element={
+            isAuth && role === "admin" ? (
+              <AppLayout>
+                <AdminPage />
+              </AppLayout>
+            ) : (
+              <Navigate replace to={"/"} />
+            )
+          }
+        />
+        <Route
+          path="/user"
+          element={
+            isAuth ? (
+              <AppLayout>
+                <User />
+              </AppLayout>
+            ) : (
+              <Navigate replace to={"/"} />
+            )
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 };
 
 export default App;

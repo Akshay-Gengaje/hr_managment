@@ -1,8 +1,9 @@
 import {useState } from "react";
-
 import Navbar from "../components/navbar/Navbar";
 import Sidebar from "../components/sidebar/Sidebar";
 
+
+// App layout is made for showing content proper way.
 const AppLayout = ({children}) => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   return (

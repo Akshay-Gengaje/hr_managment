@@ -1,7 +1,9 @@
 import { FaGreaterThan } from "react-icons/fa";
 import { routes } from "./routes";
 import { NavLink } from "react-router-dom";
+import { useUser } from "../../context/userContext";
 const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
+  const { role } = useUser();
   return (
     <div className="relative">
       <aside
@@ -23,6 +25,7 @@ const Sidebar = ({ isSidebarOpen, setSidebarOpen }) => {
             } mt-10 flex flex-col w-full font-semibold  text-gray-500 text-lg `}
           >
             {routes?.map((route) => {
+              if (role === "user" && route.path === "/admin") return;
               return (
                 <NavLink
                   to={route.path}
